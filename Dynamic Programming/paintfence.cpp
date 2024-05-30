@@ -37,6 +37,19 @@ int paintFence(int n, int k){
     }
     return dp[n];
 }
+
+//solve using tabulation with space optimization
+int paintFence(int n, int k){
+    int prev2 = k;
+    int prev1 = k+k*(k-1);
+    for(int i = 3; i <= n; i++){
+        int curr = prev2*(k-1) + prev1*(k-1);
+        //shifting the values
+        prev2 = prev1;
+        prev1 = curr;
+    }
+    return prev1;
+}
    
 
 
