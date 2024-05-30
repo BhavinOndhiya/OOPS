@@ -12,6 +12,21 @@ int paintFence(int n, int k){
     int ans = paintFence(n-2,k)*(k-1) + paintFence(n-1,k)*(k-1);
     return ans;
 }
+//solve using memoization
+int paintFence(int n, int k, vector<int>& dp){
+    if(n == 1){
+        return k;
+    }
+    if(n == 2){
+        return k+k*(k-1);
+    }
+    if(dp[n] != -1){
+        return dp[n];
+    }
+    dp[n] = paintFence(n-2,k,dp)*(k-1) + paintFence(n-1,k,dp)*(k-1);
+    return dp[n];
+}
+   
 
 
 int main(){
