@@ -48,6 +48,56 @@ int knapsack(int n, int w, vector<int>& wt, vector<int>& val, vector<vector<int>
     return maxi;
 }
 
+//using tabulation
+int knapsack(int n, int w,vector<int>& wt, vector<int>& val){
+    //declare an vector
+    vector<vector<int>> dp(n+1,vector<int>(w+1,0));
+    //initialize the dp array
+    dp[0][0] = 0;
+
+    //fill the dp array
+    for(int i = 1; i <= n; i++){
+        for(int j = 1; j <= w; j++){
+            //include
+            if(wt[i-1]<=j){
+                dp[i][j] = max(dp[i-1][j],dp[i-1][j-wt[i-1]]+val[i-1]);
+            }
+            //exclude
+            else{
+                dp[i][j] = dp[i-1][j];
+            }
+        }
+    }
+}
+
+//using space optimization
+int knapsack(int n, int w, vector<int>& wt, vector<int>& val){
+    vector<int> prev(w+1,0);
+    vector<int> curr(w+1,0);
+    
+    for(int w = wt[0]; w <= w; w++){
+        if(wt[0] <= w){
+            prev[w] = val[0];
+        }
+        else{
+            prev[w] = 0;
+        }
+    }
+
+    for(int i = 1; i < n; i++){
+        for(int w = 0; w <= w; w++){
+            int include = 0, exclude = 0;
+            if(wt[include] <= w){
+                include = max(prev[w],prev[w-wt[i]]+val[i]);
+            }
+            exclude =  0 + prev[w];
+        } 
+        //shift the values
+        prev = curr;
+    }
+    return prev[w];
+}
+
 int main(){
     int n,w;
     cout<<"Enter the number of items: ";
